@@ -1,0 +1,80 @@
+<!-- Add to <head> section -->
+<style>
+    /* Mobile sidebar toggle */
+    @media (max-width: 1023px) {
+        .sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+    }
+</style>
+
+<!-- Mobile menu button (before <nav>) -->
+<button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-orange-500 text-white p-3 rounded-lg shadow-lg hover:bg-orange-600">
+    <i class="fas fa-bars text-xl"></i>
+</button>
+
+<!-- Update navbar logo (responsive) -->
+<div class="relative hidden sm:block">
+    <div class="absolute inset-0 bg-orange-500 rounded-full blur-sm opacity-50"></div>
+    <div class="relative bg-white rounded-full p-2 shadow-md border-2 border-orange-500">
+        <i class="fas fa-utensils text-xl text-orange-500"></i>
+    </div>
+</div>
+<span class="text-lg sm:text-xl font-bold text-gray-800">Gourmet Sentinel</span>
+<span class="text-xs sm:text-sm text-gray-500 hidden sm:inline">| Admin</span>
+
+<!-- Logout button (responsive) -->
+<a href="../logout.php" class="bg-red-600 px-3 sm:px-4 py-2 rounded-lg hover:bg-red-700 transition-colors font-semibold shadow-md text-white text-sm">
+    <i class="fas fa-sign-out-alt mr-1 sm:mr-2"></i><span class="hidden sm:inline">Logout</span><span class="sm:hidden">Exit</span>
+</a>
+
+<!-- Update sidebar -->
+<aside class="sidebar w-72 bg-white shadow-2xl min-h-screen border-r border-gray-200 fixed lg:static z-40 lg:z-auto">
+    <!-- Close button for mobile -->
+    <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-600 hover:text-gray-800">
+        <i class="fas fa-times text-2xl"></i>
+    </button>
+    
+    <!-- Sidebar Header -->
+    <div class="px-6 py-8 border-b border-gray-200 bg-gradient-to-br from-orange-50 to-orange-100 mt-16 lg:mt-0">
+
+<!-- After </aside> -->
+<!-- Overlay for mobile -->
+<div id="sidebar-overlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
+
+<!-- Update main content -->
+<main class="flex-1 p-4 sm:p-6 lg:p-8 w-full">
+
+<!-- JavaScript (before closing </body>) -->
+<script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeSidebar = document.getElementById('close-sidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            overlay.classList.remove('hidden');
+        });
+    }
+
+    if (closeSidebar) {
+        closeSidebar.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.add('hidden');
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.add('hidden');
+        });
+    }
+</script>

@@ -331,56 +331,6 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                
-                <!-- Right Content - Floating Food Cards -->
-                <div class="md:w-1/2 relative hidden md:block">
-                    <div class="relative h-[600px]">
-                        <!-- Card 1 -->
-                        <div class="absolute top-0 right-0 w-72 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 transform hover:scale-105 transition-all duration-300 animate-float">
-                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" 
-                                 alt="Burger" 
-                                 class="w-full h-40 object-cover rounded-xl mb-3">
-                            <h3 class="text-xl font-semibold text-gray-800 text-lg mb-1">Premium Burger</h3>
-                            <div class="flex items-center justify-between">
-                                <span class="text-primary font-bold text-xl">₱350.00</span>
-                                <div class="flex items-center gap-1 text-yellow-400">
-                                    <i class="fas fa-star text-sm"></i>
-                                    <span class="text-gray-700 text-sm font-semibold">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Card 2 -->
-                        <div class="absolute top-40 left-0 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 transform hover:scale-105 transition-all duration-300 animate-float-delay">
-                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80" 
-                                 alt="Pizza" 
-                                 class="w-full h-36 object-cover rounded-xl mb-3">
-                            <h3 class="font-bold text-gray-800 text-lg mb-1">Italian Pizza</h3>
-                            <div class="flex items-center justify-between">
-                                <span class="text-primary font-bold text-xl">₱420.00</span>
-                                <div class="flex items-center gap-1 text-yellow-400">
-                                    <i class="fas fa-star text-sm"></i>
-                                    <span class="text-gray-700 text-sm font-semibold">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Card 3 -->
-                        <div class="absolute bottom-0 right-12 w-60 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 transform hover:scale-105 transition-all duration-300 animate-float">
-                            <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&q=80" 
-                                 alt="Pasta" 
-                                 class="w-full h-32 object-cover rounded-xl mb-3">
-                            <h3 class="font-bold text-gray-800 text-lg mb-1">Pasta Carbonara</h3>
-                            <div class="flex items-center justify-between">
-                                <span class="text-primary font-bold text-xl">₱320.00</span>
-                                <div class="flex items-center gap-1 text-yellow-400">
-                                    <i class="fas fa-star text-sm"></i>
-                                    <span class="text-gray-700 text-sm font-semibold">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         

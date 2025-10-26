@@ -115,17 +115,13 @@ if ($categories_result && mysqli_num_rows($categories_result) > 0) {
             <!-- Modern Logo Design -->
             <a href="../index.php" class="flex items-center space-x-3 group">
                 <div class="relative">
-                    <!-- Logo Icon with Gradient Background -->
                     <div class="w-12 h-12 bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110 relative overflow-hidden">
-                        <!-- Shine Effect -->
                         <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -skew-x-12"></div>
-                        <!-- Icon -->
                         <div class="relative">
                             <i class="fas fa-utensils text-white text-xl"></i>
                         </div>
                     </div>
                 </div>
-                <!-- Modern Text Logo -->
                 <div class="flex flex-col">
                     <span class="text-2xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent leading-none tracking-tight">
                         GourmetSentinel
@@ -136,56 +132,95 @@ if ($categories_result && mysqli_num_rows($categories_result) > 0) {
                 </div>
             </a>
             <div class="hidden md:flex space-x-8">
-                <a href="../index.php" class="text-gray-700 hover:text-primary transition">Home</a>
-                <a href="menu.php" class="text-primary font-semibold">Menu</a>
-                <a href="../about.php" class="text-gray-700 hover:text-primary transition">About</a>
-                <a href="../contact.php" class="text-gray-700 hover:text-primary transition">Contact</a>
+                <a href="../index.php" class="text-gray-700 hover:text-primary font-medium transition-colors">Home</a>
+                <?php if (!is_admin()): ?>
+                <a href="menu.php" class="text-gray-700 hover:text-primary font-medium transition-colors">Menu</a>
+                <?php endif; ?>
+                <a href="../about.php" class="text-gray-700 hover:text-primary font-medium transition-colors">About</a>
+                <a href="../contact.php" class="text-gray-700 hover:text-primary font-medium transition-colors">Contact</a>
             </div>
+            
             <div class="flex items-center space-x-4">
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <?php if (!is_admin()): ?>
-                    <a href="notifications.php" class="notif-btn text-gray-700 hover:text-primary transition">
-                        <i class="fas fa-bell text-xl"></i>
-                        <?php if ($user_notif_count > 0): ?>
-                        <span class="notif-badge" id="user-notif-count"><?php echo $user_notif_count; ?></span>
-                        <?php endif; ?>
-                    </a>
-                    <a href="cart.php" class="relative text-gray-700 hover:text-primary transition"><i class="fas fa-shopping-cart text-xl"></i><span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span></a>
-                    <a href="orders.php" class="text-gray-700 hover:text-primary transition"><i class="fas fa-receipt"></i></a>
+                <?php if (!is_admin()): ?>
+                <?php if (is_logged_in()): ?>
+                <!-- Notification Icon for logged in users -->
+                <?php
+                $user_notif_count = 0;
+                if (isset($_SESSION['user_id'])) {
+                    $uid = (int)$_SESSION['user_id'];
+                    $notif_query = "SELECT COUNT(*) as count FROM notifications WHERE user_role = 'user' AND user_id = {$uid} AND is_read = 0";
+                    $notif_result = mysqli_query($conn, $notif_query);
+                    if ($notif_result) {
+                        $user_notif_count = mysqli_fetch_assoc($notif_result)['count'];
+                    }
+                }
+                ?>
+                <a href="notifications.php" class="relative text-gray-700 hover:text-primary transition-colors">
+                    <i class="fas fa-bell text-xl"></i>
+                    <?php if ($user_notif_count > 0): ?>
+                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                        <?php echo $user_notif_count; ?>
+                    </span>
                     <?php endif; ?>
+                </a>
+                <?php endif; ?>
+                <a href="cart.php" class="relative text-gray-700 hover:text-primary transition-colors">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <?php if (get_cart_count() > 0): ?>
+                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        <?php echo get_cart_count(); ?>
+                    </span>
+                    <?php endif; ?>
+                </a>
+                <?php endif; ?>
+                
+                <?php if (is_logged_in()): ?>
                     <div class="relative">
-                        <button id="userMenuBtn" class="flex items-center space-x-2 text-gray-700 hover:text-primary transition">
+                        <button id="userMenuBtn" class="flex items-center space-x-2 text-gray-700 hover:text-primary transition-colors">
                             <i class="fas fa-user-circle text-xl"></i>
                             <span class="hidden md:inline"><?php echo htmlspecialchars($_SESSION['full_name']); ?></span>
                             <i class="fas fa-chevron-down text-sm"></i>
                         </button>
-                        <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 hidden z-[60] border border-gray-100">
+                        <div id="userMenuDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden z-50">
                             <?php if (is_admin()): ?>
-                                <a href="../admin/dashboard.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                                <a href="../admin/dashboard.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                     <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
                                 </a>
                             <?php else: ?>
-                                <a href="notifications.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
-                                    <i class="fas fa-bell mr-2"></i>Notifications
-                                </a>
-                                <a href="cart.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                                <a href="cart.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                     <i class="fas fa-shopping-cart mr-2"></i>My Cart
                                 </a>
-                                <a href="orders.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                                <a href="orders.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                     <i class="fas fa-receipt mr-2"></i>My Orders
                                 </a>
                             <?php endif; ?>
                             <hr class="my-2">
-                            <a href="../logout.php" class="block px-4 py-2 text-red-600 hover:bg-red-50 transition-colors font-medium">
+                            <a href="../logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
                                 <i class="fas fa-sign-out-alt mr-2"></i>Logout
                             </a>
                         </div>
                     </div>
                 <?php else: ?>
-                    <a href="../auth/login.php" class="text-gray-700 hover:text-primary transition">Login</a>
-                    <a href="../auth/register.php" class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full hover:shadow-lg transition">Sign Up</a>
+                    <a href="../auth/login.php" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-secondary transition">
+                        Login
+                    </a>
+                    <a href="../auth/register.php" class="bg-white text-primary border-2 border-primary px-6 py-2 rounded-full hover:bg-primary hover:text-white transition">
+                        Sign Up
+                    </a>
                 <?php endif; ?>
+                
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
             </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+            <a href="../index.php" class="block py-2 text-gray-700 hover:text-primary">Home</a>
+            <a href="menu.php" class="block py-2 text-gray-700 hover:text-primary">Menu</a>
+            <a href="../about.php" class="block py-2 text-gray-700 hover:text-primary">About</a>
+            <a href="../contact.php" class="block py-2 text-gray-700 hover:text-primary">Contact</a>
         </div>
     </div>
 </nav>
@@ -654,26 +689,34 @@ function addToCart(foodId) { fetch('cart_handler.php', {method: 'POST', headers:
 // User dropdown menu toggle
 document.addEventListener('DOMContentLoaded', function() {
     const userMenuBtn = document.getElementById('userMenuBtn');
-    const userDropdown = document.getElementById('userDropdown');
+    const userMenuDropdown = document.getElementById('userMenuDropdown');
     
-    if (userMenuBtn && userDropdown) {
+    if (userMenuBtn && userMenuDropdown) {
         userMenuBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            userDropdown.classList.toggle('hidden');
+            userMenuDropdown.classList.toggle('hidden');
         });
         
         // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
-            if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.add('hidden');
+            if (!userMenuBtn.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                userMenuDropdown.classList.add('hidden');
             }
         });
-        
-        // Prevent dropdown from closing when clicking inside it
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
     }
+    
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+    });
     
     // Hero Slideshow functionality
     let currentSlideIndex = 0;

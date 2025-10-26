@@ -73,7 +73,6 @@ $orders_result = mysqli_query($conn, $orders_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Orders - FoodHub Admin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -87,6 +86,7 @@ $orders_result = mysqli_query($conn, $orders_query);
             }
         }
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Mobile sidebar toggle */
         @media (max-width: 1023px) {
@@ -106,25 +106,48 @@ $orders_result = mysqli_query($conn, $orders_query);
         <i class="fas fa-bars text-xl"></i>
     </button>
 
+    <!-- Navigation -->
     <nav class="bg-white shadow-xl border-b border-gray-200">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <!-- Professional Admin Logo -->
+                <!-- Modern Admin Logo -->
                 <div class="flex items-center space-x-3">
-                    <div class="relative hidden sm:block">
-                        <div class="absolute inset-0 bg-orange-500 rounded-full blur-sm opacity-50"></div>
-                        <div class="relative bg-white rounded-full p-2 shadow-md border-2 border-orange-500">
-                            <i class="fas fa-utensils text-xl text-orange-500"></i>
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -skew-x-12"></div>
+                            <div class="relative">
+                                <i class="fas fa-utensils text-white text-xl"></i>
+                            </div>
                         </div>
                     </div>
-                    <span class="text-lg sm:text-xl font-bold text-gray-800">
-                        Gourmet Sentinel
-                    </span>
-                    <span class="text-xs sm:text-sm text-gray-500 hidden sm:inline">| Admin</span>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent leading-none tracking-tight">
+                            GourmetSentinel
+                        </span>
+                        <span class="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                            Admin Panel
+                        </span>
+                    </div>
                 </div>
-                <a href="../logout.php" class="bg-red-600 px-3 sm:px-4 py-2 rounded-lg hover:bg-red-700 transition-colors font-semibold shadow-md text-white text-sm">
-                    <i class="fas fa-sign-out-alt mr-1 sm:mr-2"></i><span class="hidden sm:inline">Logout</span><span class="sm:hidden">Exit</span>
-                </a>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <a href="notifications.php" class="notif-btn relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fas fa-bell text-lg sm:text-xl text-gray-700"></i>
+                        <?php 
+                        $notif_count = 0;
+                        $notif_query = "SELECT COUNT(*) as count FROM notifications WHERE user_role = 'admin' AND is_read = 0";
+                        $notif_result = mysqli_query($conn, $notif_query);
+                        if ($notif_result) {
+                            $notif_count = mysqli_fetch_assoc($notif_result)['count'];
+                        }
+                        if ($notif_count > 0): ?>
+                        <span class="notif-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold shadow-lg" id="admin-notif-count"><?php echo $notif_count; ?></span>
+                        <?php endif; ?>
+                    </a>
+                    <span class="text-gray-700 hidden md:inline text-sm">Welcome, <?php echo htmlspecialchars($_SESSION['full_name']); ?></span>
+                    <a href="../logout.php" class="bg-red-600 px-3 sm:px-4 py-2 rounded-lg hover:bg-red-700 transition-colors font-semibold shadow-md text-white text-sm">
+                        <i class="fas fa-sign-out-alt mr-1 sm:mr-2"></i><span class="hidden sm:inline">Logout</span><span class="sm:hidden">Exit</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>

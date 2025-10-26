@@ -190,24 +190,12 @@ if ($categories_result && mysqli_num_rows($categories_result) > 0) {
     </div>
 </nav>
 
-<!-- Auto-Sliding Hero Section with Food Images -->
-<section class="relative text-white overflow-hidden" style="min-height: 400px;">
-    <!-- Slideshow Container -->
-    <div class="hero-slideshow absolute inset-0">
-        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1920&q=80');"></div>
-    </div>
-    
-    <!-- Dark Overlay for Text Readability -->
-    <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60 z-[1]"></div>
-    
-    <!-- Content -->
-    <div class="container mx-auto px-4 relative z-10 py-20">
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-orange-500 to-amber-600 text-white py-16">
+    <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto text-center">
-            <!-- Animated Title -->
-            <h1 class="text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl animate-fade-in">
+            <!-- Title -->
+            <h1 class="text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl">
                 Our Menu
             </h1>
             <p class="text-xl md:text-2xl mb-10 text-white/95 font-light">
@@ -240,54 +228,7 @@ if ($categories_result && mysqli_num_rows($categories_result) > 0) {
             </div>
         </div>
     </div>
-    
-    <!-- Slide Indicators -->
-    <div class="absolute bottom-6 left-0 right-0 z-10 flex justify-center gap-2">
-        <span class="slide-dot active" onclick="currentSlide(0)"></span>
-        <span class="slide-dot" onclick="currentSlide(1)"></span>
-        <span class="slide-dot" onclick="currentSlide(2)"></span>
-        <span class="slide-dot" onclick="currentSlide(3)"></span>
-    </div>
 </section>
-
-<style>
-.hero-slideshow {
-    position: absolute;
-    inset: 0;
-}
-
-.slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
-}
-
-.slide.active {
-    opacity: 1;
-}
-
-.slide-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.slide-dot.active {
-    background: white;
-    width: 32px;
-    border-radius: 6px;
-}
-
-.slide-dot:hover {
-    background: rgba(255, 255, 255, 0.8);
-}
-</style>
 <section class="py-12">
     <div class="container mx-auto px-4">
         <div class="flex flex-col lg:flex-row gap-6">
@@ -674,34 +615,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
         });
     }
-    
-    // Hero Slideshow functionality
-    let currentSlideIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.slide-dot');
-    
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        currentSlideIndex = index;
-        if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
-        if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
-        
-        slides[currentSlideIndex].classList.add('active');
-        dots[currentSlideIndex].classList.add('active');
-    }
-    
-    function nextSlide() {
-        showSlide(currentSlideIndex + 1);
-    }
-    
-    window.currentSlide = function(index) {
-        showSlide(index);
-    }
-    
-    // Auto-advance slides every 5 seconds
-    setInterval(nextSlide, 5000);
 });
 </script>
 </body>
